@@ -1,0 +1,42 @@
+-- Advisors
+CREATE TABLE advisors (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  referral_code VARCHAR(64) UNIQUE NOT NULL
+);
+
+-- Advisor ↔ User Linking
+CREATE TABLE advisor_user_links (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  advisor_id INT NOT NULL,
+  user_id INT NOT NULL,
+  linked_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Trades Placed by Advisors for Users
+CREATE TABLE advisor_trades (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  advisor_id INT,
+  user_id INT,
+  asset VARCHAR(10),
+  direction ENUM('LONG', 'SHORT'),
+  leverage DECIMAL(5,2),
+  amount DECIMAL(18,8),
+  open_price DECIMAL(18,8),
+  close_price DECIMAL(18,8),
+  profit DECIMAL(18,8),
+  status ENUM('OPEN', 'CLOSED') DEFAULT 'OPEN',
+  opened_at DATETIME,
+  closed_at DATETIME
+);
+
+-- Commission Based on Profit
+CREATE TABLE advisor_commissions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  advisor_trade_id INT,
+  advisor_id INT,
+  user_id INT,
+  commission_rate DECIMAL(5,2) DEFAULT 30.00, -- 30%
+  commission_amount DECIMAL(18,8),
+  calculated_at DATETIME
+);

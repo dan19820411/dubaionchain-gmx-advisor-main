@@ -1,0 +1,15 @@
+import axios from 'axios';
+
+const API_BASE = '/api/advisor';
+
+export const fetchLinkedUsers = (advisorId) =>
+  axios.get(`${API_BASE}/linked-users?advisorId=${advisorId}`);
+
+export const placeTrade = (data) =>
+  axios.post(`${API_BASE}/trade`, data);
+
+export const closeTrade = (data) =>
+  axios.post(`${API_BASE}/close-trade`, data);
+
+export const fetchCommissions = (advisorId) =>
+  axios.get(`${API_BASE}/commissions?advisorId=${advisorId}`);

@@ -1,0 +1,35 @@
+import React, { useState, useEffect } from 'react';
+import AdvisorLinkGenerator from './components/AdvisorLinkGenerator';
+import LinkedUsersTable from './components/LinkedUsersTable';
+import TradeControls from './components/TradeControls';
+import GroupTradePanel from './components/GroupTradePanel';
+import CommissionStats from './components/CommissionStats';
+
+const AdvisorDashboard = () => {
+  const [advisorId, setAdvisorId] = useState(null);
+
+  useEffect(() => {
+    // In production, fetch this from auth/session
+    setAdvisorId(1); // Hardcoded for demo, replace with actual ID
+  }, []);
+
+  if (!advisorId) return <div>Loading...</div>;
+
+  return (
+    <div className="p-6 space-y-8">
+      <h1 className="text-3xl font-bold mb-4">Advisor Dashboard</h1>
+
+      <AdvisorLinkGenerator advisorId={advisorId} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <LinkedUsersTable advisorId={advisorId} />
+        <CommissionStats advisorId={advisorId} />
+      </div>
+
+      <TradeControls advisorId={advisorId} />
+      <GroupTradePanel advisorId={advisorId} />
+    </div>
+  );
+};
+
+export default AdvisorDashboard;

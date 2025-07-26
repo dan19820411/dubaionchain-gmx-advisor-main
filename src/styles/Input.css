@@ -1,0 +1,25 @@
+.input-form {
+  max-width: 38.75rem;
+}
+
+.input-row {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: var(--font-size-body-medium);
+}
+
+.text-input {
+  color: var(--color-slate-100);
+  border: 1px solid var(--color-gray-700);
+  font-size: var(--font-size-body-medium);
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--color-slate-500);
+  }
+}

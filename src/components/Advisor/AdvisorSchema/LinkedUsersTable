@@ -1,0 +1,48 @@
+import React, { useEffect, useState } from 'react';
+import { fetchLinkedUsers } from '../../services/advisorAPI';
+
+const LinkedUsersTable = ({ advisorId }) => {
+  const [linkedUsers, setLinkedUsers] = useState([]);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const res = await fetchLinkedUsers(advisorId);
+        setLinkedUsers(res.data);
+      } catch (err) {
+        console.error('Failed to fetch linked users', err);
+      }
+    };
+    loadUsers();
+  }, [advisorId]);
+
+  return (
+    <div className="bg-white shadow-md p-4 rounded-xl border border-gray-200">
+      <h2 className="text-xl font-semibold mb-4">Linked Users</h2>
+      {linkedUsers.length === 0 ? (
+        <p className="text-gray-600 text-sm">No users linked yet.</p>
+      ) : (
+        <table className="w-full text-sm table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-2 text-left">User ID</th>
+              <th className="p-2 text-left">Email</th>
+              <th className="p-2 text-left">Linked At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {linkedUsers.map((user) => (
+              <tr key={user.id} className="border-t hover:bg-gray-50">
+                <td className="p-2">{user.id}</td>
+                <td className="p-2">{user.email}</td>
+                <td className="p-2">{new Date(user.linked_at).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default LinkedUsersTable;
